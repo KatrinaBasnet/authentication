@@ -1,31 +1,31 @@
-import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Login from "./components/login";
 import Signup from "./components/signup";
-import './App.css'; 
+import Dashboard from "./components/dashboard";
+import './App.css';
 
 const App = () => {
-  const [activeForm, setActiveForm] = useState(null);
-
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
-      <div className="auth-box shadow p-4 rounded">
+    <Router>
+      <div className="container vh-100 d-flex flex-column justify-content-center align-items-center">
         <h2 className="text-center mb-4">Authentication</h2>
+
+        {/* Navigation buttons */}
         <div className="d-flex justify-content-center mb-3 gap-3">
-          <button className="btn btn-outline-primary" onClick={() => setActiveForm("login")}>
-            Login
-          </button>
-          <button className="btn btn-outline-primary" onClick={() => setActiveForm("signup")}>
-            Signup
-          </button>
+          <Link to="/login" className="btn btn-outline-primary">Login</Link>
+          <Link to="/signup" className="btn btn-outline-primary">Signup</Link>
+          <Link to="/dashboard" className="btn btn-outline-primary">Dashboard</Link>
         </div>
 
-        {activeForm === "login" && <Login />}
-        {activeForm === "signup" && <Signup />}
-        {!activeForm && (
-          <p className="text-center text-muted">Please select an option to continue.</p>
-        )}
+        {/* Route content */}
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="*" element={<p className="text-center text-muted">Please select an option to continue.</p>} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 };
 

@@ -12,20 +12,17 @@ export default function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/signup.php`,
-        {
-          email,
-          password,
-        }
-      );
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/signup.php`, {
+        email,
+        password,
+      });
 
       setMsg(res.data.message);
-      setSuccess(res.data.success);                                                                                                                                                                  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-if (res.data.success) {
-  navigate("/");
-}
+      setSuccess(res.data.success);
 
+      if (res.data.success) {
+        setTimeout(() => navigate("/"), 1000); // slight delay for user to see message
+      }
     } catch (err) {
       setMsg("Server error");
       setSuccess(false);
@@ -33,16 +30,11 @@ if (res.data.success) {
   };
 
   return (
-    <form
-      onSubmit={handleSignup}
-      className="p-4 border rounded shadow-sm bg-white"
-    >
+    <form onSubmit={handleSignup} className="p-4 border rounded shadow-sm bg-white">
       <h4 className="mb-4 text-center">Signup</h4>
 
       <div className="mb-3">
-        <label htmlFor="email" className="form-label">
-          Email address
-        </label>
+        <label htmlFor="email" className="form-label">Email address</label>
         <input
           type="email"
           className="form-control"
@@ -55,9 +47,7 @@ if (res.data.success) {
       </div>
 
       <div className="mb-3">
-        <label htmlFor="password" className="form-label">
-          Password
-        </label>
+        <label htmlFor="password" className="form-label">Password</label>
         <input
           type="password"
           className="form-control"
@@ -70,18 +60,14 @@ if (res.data.success) {
       </div>
 
       <div className="d-grid">
-        <button type="submit" className="btn btn-primary">
-          Sign Up
-        </button>
+        <button type="submit" className="btn btn-primary">Sign Up</button>
       </div>
-<div
-  className={`mt-3 text-center ${
-    success ? "text-success" : "text-danger"
-  }`}
->
-  {msg}
-</div>
 
+      {msg && (
+        <div className={`mt-3 text-center ${success ? "text-success" : "text-danger"}`}>
+          {msg}
+        </div>
+      )}
     </form>
   );
 }
