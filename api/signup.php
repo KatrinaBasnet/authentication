@@ -16,7 +16,7 @@ if (empty($email) || empty($password)) {
     exit;
 }
 
-// Check if user already exists
+
 $check = $conn->prepare("SELECT id FROM users WHERE email = ?");
 $check->bind_param("s", $email);
 $check->execute();
@@ -27,11 +27,10 @@ if ($check->num_rows > 0) {
     exit;
 }
 
-// Optional: Hash the password
-// $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
 
 $stmt = $conn->prepare("INSERT INTO users (email, password) VALUES (?, ?)");
-$stmt->bind_param("ss", $email, $password); // Replace $password with $hashedPassword if hashing
+$stmt->bind_param("ss", $email, $password); 
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true, "message" => "Signup successful"]);
