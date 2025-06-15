@@ -1,12 +1,69 @@
-# React + Vite
+ React + PHP Authentication System – Project Documentation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Project Overview:
+~Frontend: React (Vite)
+~Backend: PHP
+~Database: MySQL
+~Authentication: PHP Sessions
+~Data Logs: Signup + Login + Logout + Logs Display
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ Key Features:
+~Signup form with real-time validation
+~Login with session-based authentication
+~Logout functionality
+~Displays login logs in dashboard
+~Unauthorized access handling
+~Styled using Bootstrap
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Database Structure:
+Database Name : auth_system
+~Table: users
+id INT AUTO_INCREMENT PRIMARY KEY  
+email VARCHAR
+password VARCHAR
+created_at Auto-filled with current timestamp
+~Table: login_logs
+id INT AUTO_INCREMENT PRIMARY KEY  
+user_id INT  FOREIGN KEY users.id
+email VARCHAR
+login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP  
+
+
+Backend (PHP API)
+1.signup.php 
+Accepts JSON POST (email, password)
+Validates and inserts new user into DB
+Returns success or error message
+
+2.login.php
+Accepts credentials, validates against DB
+Starts session and logs login
+
+3.logout.php
+Destroys session and clears login state
+
+4.get_logins.php
+Requires active session
+Returns all user login logs for dashboard
+ 
+5.db.php
+Establishes  connection between the backend PHP scripts and MySQL database (auth_system)
+
+
+Frontend (React):
+1.Signup.jsx 
+Inputs for email and password
+Axios POST to signup.php
+Displays success or error messages
+
+2.Login.jsx
+Form input for email and password
+Axios POST to login.php
+On success, stores session ID and redirects to dashboard
+Displays success or error messages 
+
+3.Dashboard.jsx
+Checks session and fetches login logs
+Logout button calls logout.php

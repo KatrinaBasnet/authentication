@@ -21,7 +21,7 @@ export default function Signup() {
       setSuccess(res.data.success);
 
       if (res.data.success) {
-        setTimeout(() => navigate("/"), 1000); // slight delay for user to see message
+        setTimeout(() => navigate("/"), 1000); 
       }
     } catch (err) {
       setMsg("Server error");
